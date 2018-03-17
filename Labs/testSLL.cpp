@@ -2,13 +2,13 @@
 #include <vector>
 using namespace std;
 
-struct node {
-	int data;
-	node *next;
-};
 
 class LinkedList{
 	private:
+		struct node {
+			int data;
+			node *next;
+		};
 		node *head, *tail;
 		int size;
 	public:
