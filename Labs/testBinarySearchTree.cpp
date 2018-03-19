@@ -179,14 +179,14 @@ class binarySearchTree {
    		}
 
    		node* upper_bound (node* temp, string value) {
-   			node* prev = NULL;
-   			while (temp != NULL) {
+			node* prev = NULL;
+			while (temp != NULL) {
    				if (value > temp->key) {
    					prev = temp;
    					temp = temp->right;
    				} else temp = temp->left;
    			}
-   			return prev;
+			return prev;
    		}
 
    		void distance (node* lower, node* upper) {
