@@ -104,15 +104,15 @@ class binarySearchTree {
 
 			int factor = h(temp->left) - h(temp->right);
 			if (factor == 2) {
-				int balance2 = h(temp->left->left) - h(temp->left->right);
-				if (balance2 == 1) temp = rotateRight(temp);
+				int factor2 = h(temp->left->left) - h(temp->left->right);
+				if (factor2 == 1) temp = rotateRight(temp);
 				else {
 					temp->left = rotateLeft(temp->left);
 					temp = rotateRight(temp);
 				}
 			} else if (factor == -2) {
-				int balance2 = h(temp->right->left) - h(temp->right->right);
-				if (balance2 == -1) temp = rotateLeft(temp);
+				int factor2 = h(temp->right->left) - h(temp->right->right);
+				if (factor2 == -1) temp = rotateLeft(temp);
 				else {
 					temp->right = rotateRight(temp->right);
 					temp = rotateLeft(temp);
@@ -147,15 +147,15 @@ class binarySearchTree {
 			if (temp != NULL) {
 				int factor = h(temp->left) - h(temp->right);
 				if (factor == 2) {
-					int balance2 = h(temp->left->left) - h(temp->left->right);
-					if (balance2 == 1) temp = rotateRight(temp);
+					int factor2 = h(temp->left->left) - h(temp->left->right);
+					if (factor2 == 1) temp = rotateRight(temp);
 					else {
 						temp->left = rotateLeft(temp->left);
 						temp = rotateRight(temp);
 					}
 				} else if (factor == -2) {
-					int balance2 = h(temp->right->left) - h(temp->right->right);
-					if (balance2 == -1) temp = rotateLeft(temp);
+					int factor2 = h(temp->right->left) - h(temp->right->right);
+					if (factor2 == -1) temp = rotateLeft(temp);
 					else {
 						temp->right = rotateRight(temp->right);
 						temp = rotateLeft(temp);
@@ -167,8 +167,8 @@ class binarySearchTree {
 		}
 
 		node* lower_bound (node* temp, string value) {
-	        node* prev = NULL;
-	        while (temp != NULL) {
+	    	node* prev = NULL;
+	    	while (temp != NULL) {
 	            if (value < temp->key) {
 	                prev = temp;
 	                temp = temp->left;
