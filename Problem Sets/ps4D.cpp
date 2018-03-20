@@ -168,26 +168,26 @@ class binarySearchTree {
 		}
 
 		node* lower_bound (node* temp, string value) {
-	        node * prev = NULL;
+	        node * pre = NULL;
 	        while (temp != NULL) {
 	            if (value < temp->key) {
-	                prev = temp;
+	                pre = temp;
 	                temp = temp->left;
 	            } else if (temp->key == value) return temp;
 	            else temp = temp->right;
 	        }
-        	return prev;
+        	return pre;
    		}
 
    		node* upper_bound (node* temp, string value) {
-   			node* prev = NULL;
+   			node* pre = NULL;
    			while (temp != NULL) {
    				if (value > temp->key) {
-   					prev = temp;
+   					pre = temp;
    					temp = temp->right;
    				} else temp = temp->left;
    			}
-   			return prev;
+   			return pre;
    		}
 
    		void distance (node* lower, node* upper) {
@@ -251,7 +251,7 @@ int main () {
 					for (char i = lower[0]+1; i < upper[0]; i++) count += boy[i-'A'].getSize();
 					count += boy[upper[0]-'A'].distance(lower,upper);
 				}
-			} 
+			}
 			if (!gender || gender == 2) {
 				count += girl[lower[0]-'A'].distance(lower,upper);
 				if (lower[0] != upper[0]) {

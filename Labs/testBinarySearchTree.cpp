@@ -12,7 +12,7 @@ struct node {
 class binarySearchTree {
 	protected:
 		node *root;
-		int size, count;
+		int size, count, rank;
 
 		int h(node* temp) {
 			return temp == NULL ? -1 : temp->height;
@@ -43,6 +43,7 @@ class binarySearchTree {
 		}
 
 		node* search(node* temp, string value) {
+			if (temp == NULL) return NULL;
 			if (temp->key == value) return temp;
 			else if (temp-> key < value) return search(temp->right, value);
 			else return search(temp->left, value);
@@ -166,7 +167,7 @@ class binarySearchTree {
 			return temp;
 		}
 
-		node* lower_bound (node* temp, string value) {
+		node* bound (node* temp, string value) {
 	    	node* prev = NULL;
 	    	while (temp != NULL) {
 	            if (value < temp->key) {
@@ -178,21 +179,22 @@ class binarySearchTree {
         	return prev;
    		}
 
-   		node* upper_bound (node* temp, string value) {
-			node* prev = NULL;
-			while (temp != NULL) {
-   				if (value > temp->key) {
-   					prev = temp;
-   					temp = temp->right;
-   				} else temp = temp->left;
-   			}
-			return prev;
-   		}
-
    		void distance (node* lower, node* upper) {
    			if (lower == NULL || upper == NULL || lower->key > upper->key) return;
    			count++;
    			distance(successor(lower), upper);
+   		}
+
+   		void countRank(node* temp, string value) {
+   			if (predecessor(temp) == NULL) return;
+   			rank++;
+   			countRank(predecessor(temp), value);
+   		}
+
+   		node* select(node* temp, int value) {
+   			if (temp == NULL || rank == value) return temp;
+   			rank++;
+   			return select(successor(temp), value);
    		}
 
 		int getHeight(node* temp) {
@@ -221,34 +223,55 @@ class binarySearchTree {
 		}
 
 		string lower_bound (string value) {
-			return lower_bound(root, value)->key;
+			node* temp = bound(root,value);
+			return temp == NULL ? "$" : temp->key;
 		}
 
 		string upper_bound(string value) {
-			return upper_bound(root, value)->key;
+			node* temp = bound(root, value);
+			if (temp->key == value) return successor(temp)->key;
+			return temp == NULL ? "$" : temp->key;
 		}
-		int getSize() {return size;}
 
 		int distance(string lower, string upper) {
 			count = 0;
-			node* low = lower_bound(root, lower);
-			node* up = upper_bound(root, upper);
+			node* low = bound(root, lower);
+			node* up = bound(root, upper);
+			if (up->key == upper) up = successor(up);
 			distance(low, up);
 			return count;
 		}
 
-		int getHeight() {
-			return getHeight(root);
+		int countRank(string value) {
+			rank = 0;
+			node* temp = search(root, value);
+			if (temp == NULL) return -1;
+			countRank(temp, value);
+			return rank;
 		}
+
+		string select(int value) {
+			if (value > size-1) return "$";
+			rank = 0;
+			node* temp = getmin(root);
+			return select(temp, value)->key;
+		}
+
+		int getHeight() {return getHeight(root);}
+
+		int getSize() {return size;}
 };
 
 int main () {
 	binarySearchTree test;
 	test.insert("James");
+	test.insert("Albert");
+	test.insert("Zack");
+	test.insert("Matthew");
 
-	cout << test.lower_bound("A") << endl;
-	cout << test.upper_bound("Yeye") << endl;
-	cout << test.distance("A", "Yeye") << endl;
-	cout << test.getHeight() << endl;
+	cout << test.countRank("Albert") << endl;
+	cout << test.select(4) << endl;
+	cout << test.upper_bound("ZZ") << endl;
+	cout << test.select(3) << endl;
 	return 0;
 }
