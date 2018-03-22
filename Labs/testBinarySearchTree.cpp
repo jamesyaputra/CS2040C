@@ -18,6 +18,27 @@ class binarySearchTree {
 			return temp == NULL ? -1 : temp->height;
 		}
 
+		void inOrder(node* temp) {
+			if (temp == NULL) return;
+			inOrder(temp->left);
+			cout << temp->key << " ";
+			inOrder(temp->right);
+		}
+
+		void preOrder(node* temp) {
+			if (temp == NULL) return;
+			cout << temp->key << " ";
+			inOrder(temp->left);
+			inOrder(temp->right);
+		}
+
+		void postOrder(node* temp) {
+			if (temp == NULL) return;
+			inOrder(temp->left);
+			inOrder(temp->right);
+			cout << temp->key << " ";
+		}
+
 		node* rotateLeft(node* temp) {
 			node* x = temp->right;
 			x->parent = temp->parent;
@@ -192,6 +213,7 @@ class binarySearchTree {
    		}
 
    		node* select(node* temp, int value) {
+   			// 0-based index
    			if (temp == NULL || rank == value) return temp;
    			rank++;
    			return select(successor(temp), value);
@@ -205,6 +227,18 @@ class binarySearchTree {
 		binarySearchTree() {
 			root = NULL;
 			size = 0;
+		}
+
+		void inOrder() {
+			inOrder(root);
+		}
+
+		void preOrder() {
+			preOrder(root);
+		}
+
+		void postOrder() {
+			postOrder(root);
 		}
 
 		void insert(string value) {
@@ -265,6 +299,7 @@ class binarySearchTree {
 int main () {
 	binarySearchTree test;
 	test.insert("James");
+	test.insert("Pringles");
 	test.insert("Albert");
 	test.insert("Zack");
 	test.insert("Matthew");
@@ -273,5 +308,8 @@ int main () {
 	cout << test.select(4) << endl;
 	cout << test.upper_bound("ZZ") << endl;
 	cout << test.select(3) << endl;
+	test.inOrder(); cout << endl;
+	test.preOrder(); cout << endl;
+	test.postOrder(); cout << endl;
 	return 0;
 }
