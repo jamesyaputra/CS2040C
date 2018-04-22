@@ -299,10 +299,12 @@ class binarySearchTree {
 int main () {
 	binarySearchTree test;
 	test.insert("James");
+	test.insert("Jason");
 	test.insert("Pringles");
 	test.insert("Albert");
 	test.insert("Zack");
 	test.insert("Matthew");
+	test.insert("Yoyo");
 
 	cout << test.countRank("Albert") << endl;
 	cout << test.select(4) << endl;
